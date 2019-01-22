@@ -30,17 +30,15 @@ function newTodo() {
   todoItem.setAttribute('id', listID)
   todoItem.setAttribute('class', classNames.TODO_ITEM)
 
-  // create description
-  let todoText = document.createElement('span')
-  todoText.setAttribute('class', classNames.TODO_TEXT)
-  let description = document.createTextNode('description')
-  todoText.appendChild(description)
+
 
   // create checkbox
   let checkbox = document.createElement('input')
   checkbox.setAttribute('type', 'checkbox')
   checkbox.setAttribute('id', checkboxID)
   checkbox.setAttribute('class', classNames.TODO_CHECKBOX)
+
+  // set checkbox function that counts items
   checkbox.addEventListener('click', function() {
 
     if(this.checked === true) {
@@ -57,9 +55,55 @@ function newTodo() {
 
   })
 
+  // create description
+  let todoText = document.createElement('span')
+  todoText.setAttribute('class', classNames.TODO_TEXT)
+  let description = document.createTextNode('description')
+  todoText.append(description)
+
+  // delete button
+
+  let todoDelete = document.createElement('button')
+  todoDelete.setAttribute('class', classNames.TODO_DELETE)
+
+  let todoDeleteText = document.createTextNode('Delete')
+  todoDelete.append(todoDeleteText)
+
+  // delete function
+
+  todoDelete.addEventListener('click', function() {
+
+    let listElement = document.getElementById(this.parentNode.id)
+    listElement.parentNode.removeChild(listElement)
+
+    // update itemCount
+
+    itemCount -= 1
+    itemCountSpan.innerHTML = itemCount
+
+    // get the checkbox
+
+    let checkbox = this.parentNode.childNodes[0]
+
+    if (checkbox.checked === false) {
+
+      // update unchecked
+      uncheckedCount -= 1
+      uncheckedCountSpan.innerHTML = uncheckedCount
+    }
+
+
+  })
+
+
+
+
+
+
   // append to list item
   todoItem.append(checkbox)
   todoItem.append(todoText)
+  todoItem.append(todoDelete)
 
   // add the new list item to DOM
   document.getElementById("todo-list").appendChild(todoItem)
