@@ -13,29 +13,16 @@ const uncheckedCountSpan = document.getElementById('unchecked-count')
 let itemCount = 0
 let uncheckedCount = 0
 
-// declare global itemID used for unique list and checkbox IDs
-let itemID = 0
-
 function newTodo() {
-
-  // increment unique ID for DOM manipulation
-  itemID += 1
-
-  // create unique IDs for list and checkbox
-  listID = 'list' + itemID // this is needed for deletion of item
-  checkboxID = 'checkbox' + itemID // this is needed for onclick function
 
   // create list item
   let todoItem = document.createElement('li')
-  todoItem.setAttribute('id', listID)
+  /// todoItem.setAttribute('id', listID)
   todoItem.setAttribute('class', classNames.TODO_ITEM)
-
-
 
   // create checkbox
   let checkbox = document.createElement('input')
   checkbox.setAttribute('type', 'checkbox')
-  checkbox.setAttribute('id', checkboxID)
   checkbox.setAttribute('class', classNames.TODO_CHECKBOX)
 
   // set checkbox function that counts items
@@ -52,7 +39,6 @@ function newTodo() {
       uncheckedCountSpan.innerHTML = uncheckedCount
     }
 
-
   })
 
   // create description
@@ -61,8 +47,7 @@ function newTodo() {
   let description = document.createTextNode('description')
   todoText.append(description)
 
-  // delete button
-
+  // create delete button
   let todoDelete = document.createElement('button')
   todoDelete.setAttribute('class', classNames.TODO_DELETE)
 
@@ -70,19 +55,17 @@ function newTodo() {
   todoDelete.append(todoDeleteText)
 
   // delete function
-
   todoDelete.addEventListener('click', function() {
 
-    let listElement = document.getElementById(this.parentNode.id)
+    // let listElement = document.getElementById(this.parentNode.id)
+    let listElement = this.parentNode
     listElement.parentNode.removeChild(listElement)
 
     // update itemCount
-
     itemCount -= 1
     itemCountSpan.innerHTML = itemCount
 
     // get the checkbox
-
     let checkbox = this.parentNode.childNodes[0]
 
     if (checkbox.checked === false) {
@@ -91,14 +74,7 @@ function newTodo() {
       uncheckedCount -= 1
       uncheckedCountSpan.innerHTML = uncheckedCount
     }
-
-
   })
-
-
-
-
-
 
   // append to list item
   todoItem.append(checkbox)
@@ -106,7 +82,8 @@ function newTodo() {
   todoItem.append(todoDelete)
 
   // add the new list item to DOM
-  document.getElementById("todo-list").appendChild(todoItem)
+  // document.getElementById("todo-list").appendChild(todoItem)
+  list.appendChild(todoItem)
 
   // increment counters and update page.
   itemCount += 1
@@ -114,8 +91,6 @@ function newTodo() {
 
   uncheckedCount += 1
   uncheckedCountSpan.innerHTML = uncheckedCount
-
-
 }
 
 
